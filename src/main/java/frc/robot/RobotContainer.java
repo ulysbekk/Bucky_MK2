@@ -29,8 +29,8 @@ public class RobotContainer {
   shoulder = new Shoulder();
   arm = new Arm();
   drive = new Drive();
-  xboxMove = new XboxMove(xbox1, drive);
   claws = new Claw();
+  xboxMove = new XboxMove(xbox1, drive, claws, arm, shoulder, null);
   
   drive.setDefaultCommand(xboxMove);
     configureBindings();

@@ -11,12 +11,20 @@ import frc.robot.Subsystems.*;
 
 public class XboxMove extends Command {
   CommandXboxController xbox;
+  Arm arm;
+  Claw claw;
+  Shoulder shoulder;
   Drive driveBase;
-  double Throttle, Reverse, Rotation, Right, Left;
-  boolean Pirouette, Toggle, Precision, toggleCompressor, highGear, lowGear, gear;
-  public XboxMove(CommandXboxController p_xbox, Drive p_driveBase){
+  Comp comp;
+  double Throttle, Reverse, Rotation, Right, Left, moveArm, moveShoulder;
+  boolean Pirouette, Toggle, Precision, toggleCompressor, highGear, lowGear, gear, toggleClaws;
+  public XboxMove(CommandXboxController p_xbox, Drive p_driveBase, Claw p_claw, Arm p_arm, Shoulder p_shoulder, Comp p_comp) {
     xbox = p_xbox;
     driveBase = p_driveBase;
+    claw = p_claw;
+    arm = p_arm;
+    shoulder = p_shoulder;
+    comp = p_comp;
     addRequirements(driveBase);
   }
   
@@ -34,7 +42,6 @@ public class XboxMove extends Command {
     Toggle = true;
     toggleCompressor = false;
     
-    
   }
 
   @Override
@@ -47,7 +54,18 @@ public class XboxMove extends Command {
     highGear = xbox.rightBumper().getAsBoolean();
     lowGear = xbox.leftBumper().getAsBoolean();
     toggleCompressor = xbox.start().getAsBoolean();
+    moveArm = xbox.getRightY();
+    moveShoulder = xbox.getLeftY();
+    toggleClaws = xbox.a().getAsBoolean();
     
+    
+    if(toggleClaws == true){
+      claw.openClaw();
+    }
+    if(toggleClaws == false){
+      claw.closeClaw();
+    }
+
     
 
     if(Pirouette == true){
@@ -113,8 +131,6 @@ public class XboxMove extends Command {
       highGear = false;
       driveBase.shiftGearLow();
     }
-
-    
 
     if(Precision == true){
       Right = Right * 0.5;
