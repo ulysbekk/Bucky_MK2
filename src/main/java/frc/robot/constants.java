@@ -16,5 +16,9 @@ public class constants {
     public static final int MOTOR_SHOULDER1_ID = 7;
     public static final int MOTOR_SHOULDER2_ID = 8;
     public static final int MOTOR_ARM_ID = 9;
+    public static final int RIGHT_SOLENOID = 2;
+    public static final int LEFT_SOLENOID = 1;
+    public static final int GEAR_SHIFT = 0;
+    public static final int COMPRESSOR_ID = 0;
 
 }

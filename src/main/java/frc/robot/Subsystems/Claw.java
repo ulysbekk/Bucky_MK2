@@ -1,0 +1,29 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot.Subsystems;
+
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class Claw extends SubsystemBase {
+  Solenoid clawSolenoidLeft;
+  Solenoid clawSolenoidRight;
+  public Claw() {
+    clawSolenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+    clawSolenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
+  }
+  public void openClaw() {
+    clawSolenoidLeft.set(true);
+    clawSolenoidRight.set(true);
+  }
+  public void closeClaw() {
+    clawSolenoidLeft.set(false);
+    clawSolenoidRight.set(false);
+  }
+  @Override
+  public void periodic() {
+  }
+}

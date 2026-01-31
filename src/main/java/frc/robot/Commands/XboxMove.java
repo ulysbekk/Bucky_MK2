@@ -7,13 +7,13 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.constants;
-import frc.robot.Subsystems.Drive;
+import frc.robot.Subsystems.*;
 
 public class XboxMove extends Command {
   CommandXboxController xbox;
   Drive driveBase;
   double Throttle, Reverse, Rotation, Right, Left;
-  boolean Pirouette, Toggle, Precision;
+  boolean Pirouette, Toggle, Precision, toggleCompressor, highGear, lowGear, gear;
   public XboxMove(CommandXboxController p_xbox, Drive p_driveBase){
     xbox = p_xbox;
     driveBase = p_driveBase;
@@ -32,6 +32,9 @@ public class XboxMove extends Command {
     Pirouette = true;
     Precision = false;
     Toggle = true;
+    toggleCompressor = false;
+    
+    
   }
 
   @Override
@@ -40,7 +43,12 @@ public class XboxMove extends Command {
     Reverse = xbox.getLeftTriggerAxis();
     Rotation = xbox.getLeftX();
     Pirouette = xbox.leftStick().getAsBoolean();
-    Toggle = xbox.a().getAsBoolean();
+    Toggle = xbox.x().getAsBoolean();
+    highGear = xbox.rightBumper().getAsBoolean();
+    lowGear = xbox.leftBumper().getAsBoolean();
+    toggleCompressor = xbox.start().getAsBoolean();
+    
+    
 
     if(Pirouette == true){
       if(Math.abs(Rotation) > constants.DEADZONE){
@@ -90,6 +98,24 @@ public class XboxMove extends Command {
         Precision = false;
       }
     }
+    if(toggleCompressor == true){
+      toggleCompressor = false;
+    }
+    else if(toggleCompressor == false){
+      toggleCompressor = true;
+    }
+
+    if(highGear == true){
+      lowGear = false;
+      driveBase.shiftGearHigh();
+    }
+    if(lowGear == true){
+      highGear = false;
+      driveBase.shiftGearLow();
+    }
+
+    
+
     if(Precision == true){
       Right = Right * 0.5;
       Left = Left * 0.5;

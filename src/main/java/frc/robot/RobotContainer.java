@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Subsystems.Shoulder;
 import frc.robot.Subsystems.Arm;
 import frc.robot.Commands.XboxMove;
+import frc.robot.Subsystems.Claw;
 import frc.robot.Subsystems.Drive;
 
 
@@ -19,6 +20,7 @@ public class RobotContainer {
   Arm arm;
   CommandXboxController xbox2;
   Drive drive;
+  Claw claws;
   XboxMove xboxMove;
 
   public RobotContainer() {
@@ -28,6 +30,7 @@ public class RobotContainer {
   arm = new Arm();
   drive = new Drive();
   xboxMove = new XboxMove(xbox1, drive);
+  claws = new Claw();
   
   drive.setDefaultCommand(xboxMove);
     configureBindings();
@@ -36,6 +39,8 @@ public class RobotContainer {
   private void configureBindings() {
     shoulder.setDefaultCommand(shoulder.setShoulder(xbox2::getLeftY));
     arm.setDefaultCommand(arm.setArm(xbox2::getRightY));
+    xbox2.a().onTrue(Commands.runOnce(() -> claws.openClaw(), claws));
+    xbox2.x().onTrue(Commands.runOnce(() -> claws.closeClaw(), claws));
   }
 
   public Command getAutonomousCommand() {
