@@ -10,6 +10,7 @@ import frc.robot.constants;
 import frc.robot.Subsystems.*;
 
 public class XboxMove extends Command {
+  //declare everything
   CommandXboxController xbox;
   Arm arm;
   Claw claw;
@@ -28,10 +29,9 @@ public class XboxMove extends Command {
     addRequirements(driveBase);
   }
   
-
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //set everything to starting pos.
     Throttle = 0;
     Rotation = 0;
     Reverse = 0;
@@ -57,8 +57,23 @@ public class XboxMove extends Command {
     moveArm = xbox.getRightY();
     moveShoulder = xbox.getLeftY();
     toggleClaws = xbox.a().getAsBoolean();
-    
-    
+
+    //arm logic
+    if(Math.abs(this.moveArm) > constants.DEADZONE){
+      arm.setArmSpeed(this.moveArm);
+    }
+    else {
+      arm.setArmSpeed(0);
+    }
+
+    //shoulder logic
+    if(Math.abs(this.moveShoulder) > constants.DEADZONE){
+      shoulder.setShoulderSpeed(this.moveShoulder);
+    }
+    else {
+      shoulder.setShoulderSpeed(0);
+    }
+    //claw logic
     if(toggleClaws == true){
       claw.openClaw();
     }
@@ -66,8 +81,7 @@ public class XboxMove extends Command {
       claw.closeClaw();
     }
 
-    
-
+    //pirouette logic. if false - proceed to normal, true - pirouette
     if(Pirouette == true){
       if(Math.abs(Rotation) > constants.DEADZONE){
         Right = -1 * Rotation;
@@ -108,6 +122,7 @@ public class XboxMove extends Command {
       Right = 0;
       Left = 0;
     }
+    //Logic of the Precision toggle.
     if(Toggle == true){
       if(Precision == false){
         Precision = true;
@@ -116,6 +131,7 @@ public class XboxMove extends Command {
         Precision = false;
       }
     }
+    //Logic of the compressor. Might be broken.
     if(toggleCompressor == true){
       toggleCompressor = false;
     }
@@ -123,6 +139,7 @@ public class XboxMove extends Command {
       toggleCompressor = true;
     }
 
+    //Gear Shifting Logic.
     if(highGear == true){
       lowGear = false;
       driveBase.shiftGearHigh();
@@ -131,7 +148,7 @@ public class XboxMove extends Command {
       highGear = false;
       driveBase.shiftGearLow();
     }
-
+    //Precision Logic.
     if(Precision == true){
       Right = Right * 0.5;
       Left = Left * 0.5;
