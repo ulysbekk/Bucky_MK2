@@ -12,7 +12,6 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants;
@@ -22,13 +21,10 @@ public class Arm extends SubsystemBase {
   SparkMaxConfig armMotorConfig;
   public Arm() {
     armMotor = new SparkMax(constants.MOTOR_ARM_ID, MotorType.kBrushless);
-
     armMotorConfig = new SparkMaxConfig();
-
     armMotorConfig
       .smartCurrentLimit(50)
       .idleMode(IdleMode.kBrake);
-
     armMotor.configure(armMotorConfig,ResetMode.kResetSafeParameters,PersistMode.kPersistParameters);
   }
   public void setArmSpeed(double speed){
@@ -42,6 +38,5 @@ public class Arm extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-  }
+  public void periodic(){}
 }

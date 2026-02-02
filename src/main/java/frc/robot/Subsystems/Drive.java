@@ -91,9 +91,7 @@ public class Drive extends SubsystemBase {
     public void moveMotor(double rightSpeed, double leftSpeed){
       Right1.set(rightSpeed);
       Left1.set(leftSpeed);
-      
     }
-
     public void shiftGearHigh(){
       gearShift.set(true);
     }
@@ -102,6 +100,5 @@ public class Drive extends SubsystemBase {
     }
 
   @Override
-  public void periodic() {
-  }
+  public void periodic(){}
 }

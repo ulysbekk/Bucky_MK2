@@ -26,9 +26,6 @@ public class Shoulder extends SubsystemBase {
     shoulderMotor1 = new SparkMax(constants.MOTOR_SHOULDER1_ID, MotorType.kBrushless);
     shoulderMotor2 = new SparkMax(constants.MOTOR_SHOULDER2_ID, MotorType.kBrushless);
 
-    
-
-
     shoulderMotorConfig1 = new SparkMaxConfig();
     shoulderMotorConfig2 = new SparkMaxConfig();
 

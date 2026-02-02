@@ -23,7 +23,7 @@ public class Claw extends SubsystemBase {
     clawSolenoidLeft.set(false);
     clawSolenoidRight.set(false);
   }
+
   @Override
-  public void periodic() {
-  }
+  public void periodic(){}
 }

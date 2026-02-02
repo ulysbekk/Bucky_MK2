@@ -10,7 +10,7 @@ import frc.robot.constants;
 import frc.robot.Subsystems.*;
 
 public class XboxMove extends Command {
-  //declare everything
+  //Declare Everything.
   CommandXboxController xbox;
   Arm arm;
   Claw claw;
@@ -31,7 +31,7 @@ public class XboxMove extends Command {
   
   @Override
   public void initialize() {
-    //set everything to starting pos.
+    //Set everything to 0 or false at start.
     Throttle = 0;
     Rotation = 0;
     Reverse = 0;
@@ -40,8 +40,7 @@ public class XboxMove extends Command {
     Pirouette = true;
     Precision = false;
     Toggle = true;
-    toggleCompressor = false;
-    
+    toggleCompressor = false; 
   }
 
   @Override
@@ -58,36 +57,35 @@ public class XboxMove extends Command {
     moveShoulder = xbox.getLeftY();
     toggleClaws = xbox.a().getAsBoolean();
 
-    //arm logic
+    //Arm Logic.
     if(Math.abs(this.moveArm) > constants.DEADZONE){
       arm.setArmSpeed(this.moveArm);
     }
     else {
       arm.setArmSpeed(0);
     }
-
-    //shoulder logic
+    //Shoulder Logic.
     if(Math.abs(this.moveShoulder) > constants.DEADZONE){
       shoulder.setShoulderSpeed(this.moveShoulder);
     }
     else {
       shoulder.setShoulderSpeed(0);
     }
-    //claw logic
+    //Claw Logic.
     if(toggleClaws == true){
       claw.openClaw();
     }
     if(toggleClaws == false){
       claw.closeClaw();
     }
-
-    //pirouette logic. if false - proceed to normal, true - pirouette
+    //Pirouette Logic. If false - proceed to normal, true - Pirouette.
     if(Pirouette == true){
       if(Math.abs(Rotation) > constants.DEADZONE){
         Right = -1 * Rotation;
         Left = Rotation;
       }
     }
+    //Normal Driving Logic.
     else if(Pirouette == false){
       if(Throttle > constants.DEADZONE && Math.abs(Rotation) < constants.DEADZONE){
         Right = Throttle;
@@ -113,11 +111,13 @@ public class XboxMove extends Command {
         Right = (-1 * Reverse) * (Rotation - 1);
         Left = -1 * Reverse;
       }
+      //Defaults to 0 if no conditions are met.
       else {
         Right = 0;
         Left = 0;
       }
     }
+    //Defaults to 0 if no conditions are met.
     else {
       Right = 0;
       Left = 0;
@@ -131,14 +131,13 @@ public class XboxMove extends Command {
         Precision = false;
       }
     }
-    //Logic of the compressor. Might be broken.
+    //Logic of the compressor (Might be broken.)
     if(toggleCompressor == true){
       toggleCompressor = false;
     }
     else if(toggleCompressor == false){
       toggleCompressor = true;
     }
-
     //Gear Shifting Logic.
     if(highGear == true){
       lowGear = false;
@@ -154,7 +153,6 @@ public class XboxMove extends Command {
       Left = Left * 0.5;
     }
     driveBase.moveMotor(Right, Left);
-    
   }
 
   @Override

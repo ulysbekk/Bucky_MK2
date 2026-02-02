@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-/** Add your docs here. */
 public class constants {
+    //Constants for the robot.
     public static double DEADZONE = 0.1;
     public static final int MOTOR_R1_ID = 1;
     public static final int MOTOR_R2_ID = 3;
